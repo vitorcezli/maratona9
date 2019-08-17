@@ -2,3 +2,4 @@ Flask
 pillow
 numpy
 wiotp-sdk
+watson_machine_learning_client
