@@ -92,7 +92,7 @@ def predict():
 
 
     resposta = {
-        "class": 'praga' if model_result['values'][0][1][0] == 1 else 'normal'
+        "class": "praga" if model_result['values'][0][1][0] == 1 else "normal"
     }
     return resposta
 
