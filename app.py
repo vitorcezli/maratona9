@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, json, jsonify
 import os
+import math
 from wiotp import sdk
 import json
 import numpy as np
@@ -46,7 +47,7 @@ def result():
     resposta = {
         "iotData": data,
         "itu": itu,
-        "volumeAgua": umidade_solo * 4.19,
+        "volumeAgua": umidade_solo * 4 * math.pi / 3,
         "fahrenheit": (32 * temperatura - 32) * 5 / 9
     }
     
