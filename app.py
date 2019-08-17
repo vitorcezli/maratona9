@@ -47,7 +47,7 @@ def result():
     resposta = {
         "iotData": data,
         "itu": itu,
-        "volumeAgua": umidade_solo * 4 * math.pi / 3,
+        "volumeAgua": umidade_solo * 4 * math.pi / 6,
         "fahrenheit": temperatura * 9 / 5 + 32
     }
     
