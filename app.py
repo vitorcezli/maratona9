@@ -22,7 +22,7 @@ def myStatusCallback(status):
     global response_iot
     response_iot = status.data
     print('response', response_iot)
-
+#test
 myConfig = { 
     "auth": {
         "key": "a-y76ylb-ckj29x2v6b",
