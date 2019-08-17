@@ -1,3 +1,4 @@
 Flask
 pillow
 numpy
+wiotp-sdk

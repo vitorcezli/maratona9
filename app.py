@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, json, jsonify
 import os
+from wiotp import sdk
 import json
 import numpy as np
 import io
@@ -8,24 +9,48 @@ from PIL import Image
 app = Flask(__name__)
 app.config.from_object(__name__)
 port = int(os.getenv('PORT', 8080))
+response_iot = None
+resposta = None
 
 @app.route("/", methods=['GET'])
 def hello():
     error=None
     return render_template('index.html', error=error)
 
+def myStatusCallback(status):
+    response_iot = status.data
+
+myConfig = { 
+    "auth": {
+        "key": "a-y76ylb-ckj29x2v6b",
+        "token": "IoZc5eC_lxrtJdmi4O"
+    }
+}
+client = sdk.application.ApplicationClient(config=myConfig)
+client.connect()
+client.subscribeToDeviceEvents(typeId='maratona', deviceId='d9', eventId='sensor')
+client.deviceEventCallback = myStatusCallback
+client.subscribeToDeviceEvents()
+
+
 @app.route("/iot", methods=['GET'])
 def result():
     print(request.args)
+    data = response_iot['data']
+    umidade_ar = response_iot['data']['umidade_ar']
+    temperatura = response_iot['data']['temperatura']
+    umidade_solo = response_iot['data']['umidade_solo']
+    itu = temperatura - 0.55 * ( 1 - umidade_ar ) * ( temperatura - 14 )
+    resposta = {
+        "iotData": response_iot['data'],
+        "itu": itu,
+        "volumeAgua": umidade_solo * 4.19,
+        "fahrenheit": temperatura
+    }
+    print(resposta)
     
     # Implemente sua lógica aqui e insira as respostas na variável 'resposta'
-    
-    resposta = {
-        "iotData": "data",
-        "itu": "data",
-        "volumeAgua": "data",
-        "fahrenheit": "data"
-    }
+
     response = app.response_class(
         response=json.dumps(resposta),
         status=200,
