@@ -18,7 +18,9 @@ def hello():
     return render_template('index.html', error=error)
 
 def myStatusCallback(status):
+    global response_iot
     response_iot = status.data
+    print('response', response_iot)
 
 myConfig = { 
     "auth": {
@@ -42,12 +44,11 @@ def result():
     umidade_solo = response_iot['data']['umidade_solo']
     itu = temperatura - 0.55 * ( 1 - umidade_ar ) * ( temperatura - 14 )
     resposta = {
-        "iotData": response_iot['data'],
+        "iotData": data,
         "itu": itu,
         "volumeAgua": umidade_solo * 4.19,
         "fahrenheit": temperatura
     }
-    print(resposta)
     
     # Implemente sua lógica aqui e insira as respostas na variável 'resposta'
 
