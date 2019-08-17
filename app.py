@@ -16,7 +16,7 @@ def hello():
 
 @app.route("/iot", methods=['GET'])
 def result():
-    print(request)
+    print(request.args)
     
     # Implemente sua lógica aqui e insira as respostas na variável 'resposta'
     
